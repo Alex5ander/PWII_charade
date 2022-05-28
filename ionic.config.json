@@ -1,0 +1,7 @@
+{
+  "name": "PWII_hit_the_riddle",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
