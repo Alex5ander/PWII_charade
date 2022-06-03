@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { LoadingController, ModalController } from '@ionic/angular';
 import { Charade, CharadeService } from '../charade.service';
 import { ConfirmShowAnswerComponent } from '../confirm-show-answer/confirm-show-answer.component';
 
@@ -12,21 +12,32 @@ export class HomePage implements OnInit{
 
   charade: Charade[];
   answer = '';
-  constructor(private service: CharadeService, private modal: ModalController) {}
-  requestCharade() {
-    this.answer = '';
-    this.service.get().subscribe((observable: Charade[]) => {
-      this.charade = observable;
+  constructor(private service: CharadeService, private modal: ModalController, private loadingController: LoadingController) {}
+  async requestCharade() {
+    const loading = await this.loadingController.create({
+      message: 'Carregando a charada...',
+      duration: 2000
     });
+
+    loading.present();
+
+    this.answer = '';
+    this.service.get().subscribe(async (observable: Charade[]) => {
+      await loading.dismiss();
+      this.charade = observable;
+    }, async (err) => {
+      await loading.dismiss();
+      alert(JSON.stringify(err, null, 2));
+    });
+
   }
 
-  showAnsewer() {
+  async showAnsewer() {
+    await this.modal.dismiss();
     this.answer = this.charade[0].resposta;
-    this.modal.dismiss();
   }
 
   async canShowAnswer() {
-    // this.answer = this.charade[0].resposta;
     const modal = await this.modal.create({
       component: ConfirmShowAnswerComponent,
       componentProps: { yes: () => this.showAnsewer() }
