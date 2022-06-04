@@ -6,16 +6,20 @@
 
 <ion-content fullscreen >
  <div class="container-fluid d-flex flex-column p-3 justify-content-between h-100">
- <div>
   <ion-card>
     <ion-card-header>
       <ion-card-title class="fw-bolder" *ngIf="charade" >{{charade[0].pergunta}}</ion-card-title>
     </ion-card-header>
   </ion-card>
- </div>
 
-  <div class="w-full p-5 card" [ngClass]="answer.length > 0 ? 'front': '' " >
-    <h2 class="fw-bold">{{answer}}</h2>
+  <div class="w-full cards" [ngClass]="answer.length > 0 ? 'rotate' : '' " >
+
+    <div class="card back">
+    </div>
+
+    <div class="card front d-flex justify-content-center align-items-center">
+      <h2 class="fw-bold">{{answer}}</h2>
+    </div>
   </div>
 
   <div class="d-flex flex-column gap-2">

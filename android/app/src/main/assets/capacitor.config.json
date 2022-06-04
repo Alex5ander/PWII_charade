@@ -2,6 +2,5 @@
 	"appId": "io.ionic.starter",
 	"appName": "PWII_hit_the_riddle",
 	"webDir": "www",
-	"bundledWebRuntime": false,
-	"androidScheme": "http"
+	"bundledWebRuntime": false
 }
